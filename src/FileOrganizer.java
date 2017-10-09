@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileOrganizer {
@@ -9,21 +10,30 @@ public class FileOrganizer {
     BufferedReader br = null;
     String line = "";
     String cvsSplitBy = ",";
+    ArrayList array = new ArrayList();
 
     
     public void readFile(String file) {
     	
     	 try {
 
-    	        br = new BufferedReader(new FileReader(csvFile));
+    	        br = new BufferedReader(new FileReader(file));
     	        while ((line = br.readLine()) != null) {
-
-    	            // use comma as separator
-    	            String[] country = line.split(cvsSplitBy);
-
-    	            System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
-
+    	        	 String[] lineElements = line.split(cvsSplitBy);
+    	        	 for(int i=0; i<lineElements.length; i++) {
+    	        		 System.out.println(lineElements[i]);
+    	        	 }
+//    	        	 System.out.println(country);
     	        }
+
+//    	        while ((line = br.readLine()) != null) {
+//
+//    	            // use comma as separator
+//    	            String[] country = line.split(cvsSplitBy);
+//
+//    	            System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
+//
+//    	        }
 
     	    } catch (FileNotFoundException e) {
     	        e.printStackTrace();

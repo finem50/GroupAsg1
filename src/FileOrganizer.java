@@ -10,13 +10,32 @@ public class FileOrganizer {
     BufferedReader br = null;
     String line = "";
     String cvsSplitBy = ",";
-    ArrayList array = new ArrayList();
+    ArrayList<String[]> array = new ArrayList();
+    
+    String classNumber, semester, year, firstName, lastName, grade;
+    String classData[] = new String[3];
 
     
     public void readFile(String file) {
+    	String fileName = file;
+    	int number;
     	
+    	number = fileName.indexOf("-");
+  	  	classNumber = fileName.substring(0, number);
+  	  	fileName = fileName.substring(number+1);
+  	  	number = fileName.indexOf("-");
+  	  	semester = fileName.substring(0, number);
+  	  	fileName = fileName.substring(number+1);
+  	  	year = fileName;
+  	  	
+  	  	classData[0] = classNumber;
+  	  	classData[1] = semester;
+  	  	classData[2] = year;
+  	  	
+  	  	array.add(classData);
+  	  	
     	 try {
-
+    		 file.indexOf("-");
     	        br = new BufferedReader(new FileReader(file));
     	        while ((line = br.readLine()) != null) {
     	        	 String[] lineElements = line.split(cvsSplitBy);
@@ -25,15 +44,6 @@ public class FileOrganizer {
     	        	 }
 //    	        	 System.out.println(country);
     	        }
-
-//    	        while ((line = br.readLine()) != null) {
-//
-//    	            // use comma as separator
-//    	            String[] country = line.split(cvsSplitBy);
-//
-//    	            System.out.println("Country [code= " + country[4] + " , name=" + country[5] + "]");
-//
-//    	        }
 
     	    } catch (FileNotFoundException e) {
     	        e.printStackTrace();

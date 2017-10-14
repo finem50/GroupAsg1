@@ -40,7 +40,7 @@ public class FileOrganizer {
     String cvsSplitBy = ",";
     ArrayList<String[]> array = new ArrayList<String[]>();
     
-    String classNumber, semester, year, firstName, lastName, grade;
+    String classNumber, semester, year, firstName, lastName, grade, assignmentName, userID, studentID;
     String classData[] = new String[3];
     boolean fullNameUsed = false;
 
@@ -206,5 +206,63 @@ public class FileOrganizer {
         	System.out.println();
     	}
     	
+    }
+    public FileOrganizer(String firstName, String lastName, String userID, String studentID,
+                         String assignmentName, String grade){
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userID = userID;
+        this.studentID = studentID;
+        this.assignmentName = assignmentName;
+        this.grade = grade;
+    }
+
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+
+    public String getUserID(){
+        return userID;
+    }
+
+    public void setUserID(String userID){
+        this.userID = userID;
+    }
+
+    public String getStudentID(){
+        return studentID;
+    }
+
+    public void setStudentID(String studentID){
+        this.studentID = studentID;
+    }
+
+    public String getAssignmentName(){
+        return assignmentName;
+    }
+
+    public void setAssignmentName(String assignmentName){
+        this.assignmentName = assignmentName;
+    }
+
+    public String getGrade(){
+        return grade;
+    }
+
+    public void setGrade(String grade){
+        this.grade = grade;
     }
 }

@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 //README
@@ -207,6 +209,8 @@ public class FileOrganizer {
     	}
     	
     }
+
+    //Constructor for FileOrganizer
     public FileOrganizer(String firstName, String lastName, String userID, String studentID,
                          String assignmentName, String grade){
         super();
@@ -218,6 +222,7 @@ public class FileOrganizer {
         this.grade = grade;
     }
 
+    //Getters and setters for first name, last name, userID/studentID, assignment name, and grade
     public String getFirstName(){
         return firstName;
     }

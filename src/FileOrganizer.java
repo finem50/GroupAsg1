@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +35,11 @@ import java.util.Scanner;
 
 public class FileOrganizer {
     BufferedReader br = null;
-    String line = "";
+	BufferedWriter bw = null;
+	FileWriter fw = null;
+	final String FILENAME = "C:\\temp\\filename.csv";
+	StringBuilder sb = new StringBuilder();
+	String line = "";
     String cvsSplitBy = ",";
     ArrayList<String[]> array = new ArrayList<String[]>();
     
@@ -67,15 +68,15 @@ public class FileOrganizer {
   	  	classData[0] = classNumber;
   	  	classData[1] = semester;
   	  	classData[2] = year;
-  	  	
+
   	  	//This is where we had the data to Index 0.
   	  	array.add(classData);
-  	  	
+
   	  	//Since classData's data is passed by reference (possibly),
   	  	//the array needs to be reinitialized each time we change its values.
   	  	classData = null;
-  	  	
-    	 try {
+
+		try {
     	        br = new BufferedReader(new FileReader(file));
     	        
     	        //The first row holds the column headings for the file.
@@ -183,7 +184,7 @@ public class FileOrganizer {
     	    }
     	
     }
-    
+
     
     //Getter for our array. To Grab a value, say, 
     //a student's ID from the first row of the array's 1st index:
@@ -207,67 +208,111 @@ public class FileOrganizer {
         	}
         	System.out.println();
     	}
-    	
+
     }
 
-    //Constructor for FileOrganizer
-    public FileOrganizer(String firstName, String lastName, String userID, String studentID,
-                         String assignmentName, String grade){
-        super();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userID = userID;
-        this.studentID = studentID;
-        this.assignmentName = assignmentName;
-        this.grade = grade;
+		//Creating a CSV file writer
+		public void writeCSVFile() {
+
+			try {
+				//This is where we will write to FILENAME
+
+				fw = new FileWriter(new File(FILENAME));
+				for (String element[] : getArray()) {
+					fw.append(element.toString());
+					fw.append(",");
+				}
+				bw.write(fw.toString());
+				bw.close();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			} finally {
+
+				try {
+					if (bw != null)
+						bw.close();
+
+					if (fw != null)
+						fw.close();
+
+				} catch (IOException ex) {
+
+					ex.printStackTrace();
+
+			}
+		}
     }
 
-    //Getters and setters for first name, last name, userID/studentID, assignment name, and grade
-    public String getFirstName(){
-        return firstName;
-    }
+	public class Student {
 
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
+		private String firstName;
+		private String lastName;
+		private String userID;
+		private String studentID;
+		private String assignmentName;
+		private String grade;
 
-    public String getLastName(){
-        return lastName;
-    }
+		public Student(String firstName, String lastName, String userID, String studentID,
+					   String assignmentName, String grade){
+			super();
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.userID = userID;
+			this.studentID = studentID;
+			this.assignmentName = assignmentName;
+			this.grade = grade;
+		}
 
-    public void setLastName(String lastName){
-        this.lastName = lastName;
-    }
+		//Getters and setters for first name, last name, userID/studentID, assignment name, and grade
+		public String getFirstName(){
+			return firstName;
+		}
 
-    public String getUserID(){
-        return userID;
-    }
+		public void setFirstName(String firstName){
+			this.firstName = firstName;
+		}
 
-    public void setUserID(String userID){
-        this.userID = userID;
-    }
+		public String getLastName(){
+			return lastName;
+		}
 
-    public String getStudentID(){
-        return studentID;
-    }
+		public void setLastName(String lastName){
+			this.lastName = lastName;
+		}
 
-    public void setStudentID(String studentID){
-        this.studentID = studentID;
-    }
+		public String getUserID(){
+			return userID;
+		}
 
-    public String getAssignmentName(){
-        return assignmentName;
-    }
+		public void setUserID(String userID){
+			this.userID = userID;
+		}
 
-    public void setAssignmentName(String assignmentName){
-        this.assignmentName = assignmentName;
-    }
+		public String getStudentID(){
+			return studentID;
+		}
 
-    public String getGrade(){
-        return grade;
-    }
+		public void setStudentID(String studentID){
+			this.studentID = studentID;
+		}
 
-    public void setGrade(String grade){
-        this.grade = grade;
-    }
+		public String getAssignmentName(){
+			return assignmentName;
+		}
+
+		public void setAssignmentName(String assignmentName){
+			this.assignmentName = assignmentName;
+		}
+
+		public String getGrade(){
+			return grade;
+		}
+
+		public void setGrade(String grade){
+			this.grade = grade;
+		}
+	}
 }

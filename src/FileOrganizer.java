@@ -214,15 +214,25 @@ public class FileOrganizer {
 		//Creating a CSV file writer
 		public void writeCSVFile() {
 
+
 			try {
 				//This is where we will write to FILENAME
 
 				fw = new FileWriter(new File(FILENAME));
-				for (String element[] : getArray()) {
-					fw.append(element.toString());
-					fw.append(",");
+				bw = new BufferedWriter(fw);
+
+
+				for(int i = 0; i < getArray().size(); i++) {
+
+					for (String element : getArray().get(i)) {
+					sb.append(element);
+					sb.append(cvsSplitBy);
+					}
+
+					sb.append("\n");
 				}
-				bw.write(fw.toString());
+
+				bw.write(sb.toString());
 				bw.close();
 
 			} catch (IOException e) {
@@ -241,7 +251,6 @@ public class FileOrganizer {
 				} catch (IOException ex) {
 
 					ex.printStackTrace();
-
 			}
 		}
     }

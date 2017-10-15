@@ -8,9 +8,6 @@ public class AcademicScanner {
         String file326F97 = "326-fall-1997.csv";
 
         FileOrganizer org = new FileOrganizer();
-//
-//        ArrayList<String[]> exampleList = org.getArray();
-//        String[] firstIndex = exampleList.get(i);
 
         //Read files
         org.readFile(file226F97);

@@ -38,15 +38,24 @@ public class FileOrganizer {
     BufferedReader br = null;
     String line = "";
     String cvsSplitBy = ",";
-    ArrayList<String[]> array = new ArrayList<String[]>();
+    ArrayList<String[]> array;
+    ArrayList<String[]> entireArray = new ArrayList<String[]>();
+    ArrayList<ArrayList<String>> students = new ArrayList<ArrayList<String>>();
+    ArrayList<String[]> classes = new ArrayList<String[]>();
     
     String classNumber, semester, year, firstName, lastName, grade;
     String classData[] = new String[3];
+    ArrayList<String> studentData = new ArrayList<String>();
+
     boolean fullNameUsed = false;
 
     //Method used to read files and allocate data to an 
     //ArrayList of type String[].
     public void readFile(String file) {
+    	fullNameUsed = false;
+    	
+    	array = new ArrayList<String[]>();
+    	
     	String fileName = file;
     	int indexLocation;
     	
@@ -84,6 +93,11 @@ public class FileOrganizer {
     	        String[] firstLine = line.split(cvsSplitBy);
     	        int rowLength = firstLine.length;
     	        
+    	        studentData.add("Student ID");
+    	        studentData.add(classNumber);
+    	        studentData.add(semester);
+    	        studentData.add(year);
+    	        
     	        //Here we are identifying the index locations of special data
     	        //values from the file.
     	        for(int i = 0; i<firstLine.length; i++) {
@@ -108,7 +122,12 @@ public class FileOrganizer {
     	        	else if (firstLine[i].toLowerCase().indexOf("grade") != -1) {
     	        		gradeLoc = i;
     	        	}
+    	        	else {
+    	        		studentData.add(firstLine[i]);
+    	        	}
     	        }
+    	        
+    	        students.add(studentData);
     	        
     	        int startingIndex = 4;
     	        
@@ -132,9 +151,15 @@ public class FileOrganizer {
     	        while ((line = br.readLine()) != null) {
     	        	classData = new String [rowLength];
     	        	 String[] lineElements = line.split(cvsSplitBy);
+    	        	 
+    	        	 studentData.add(1,classNumber);
+    	        	 studentData.add(2,semester);
+    	        	 studentData.add(3, year);
+    	        	 
     	        	 for(int i=0; i<lineElements.length; i++) {
     	        		 if (i == idLoc) {
-    	        			 classData[0] = lineElements[i]; 
+    	        			 classData[0] = lineElements[i];
+    	        			 studentData.add(0, lineElements[i]);
     	        		 }
     	        		 else if (i==oneNameLoc) {
     	        			 classData[1] = lineElements[i];
@@ -143,10 +168,11 @@ public class FileOrganizer {
     	        			 classData[2] = lineElements[i];
     	        		 }
     	        		 else if(i==fullNameLoc) {
-    	        			 classData[1] = lineElements[i];
+    	        			 classData[2] = lineElements[i].substring(1);
     	        		 }
     	        		 else if(i==(fullNameLoc+1)) {
-    	        			 classData[2] = lineElements[i];
+    	        			 int location = lineElements[i].indexOf("\"");
+    	        			 classData[1] = lineElements[i].substring(1, location);
     	        		 }
     	        		 else if (i == gradeLoc) {
     	        			 classData[3] = lineElements[i];
@@ -165,7 +191,9 @@ public class FileOrganizer {
     	        	 
     	        	 startingIndex = 4;
     	        }
-
+    	        
+    	        
+    	        
     	    } catch (FileNotFoundException e) {
     	        e.printStackTrace();
     	    } catch (IOException e) {
@@ -179,7 +207,16 @@ public class FileOrganizer {
     	            }
     	        }
     	    }
-    	
+    	 
+    	 for(int i = 0; i<array.size(); i++) {
+    		 entireArray.add(array.get(i));
+    	 }
+    	 
+    	 array = null;
+
+		 String[] hello = new String[1];
+		 hello[0] = "";
+    	 entireArray.add(hello);
     }
     
     
@@ -196,15 +233,39 @@ public class FileOrganizer {
     //can be used to help understand our the array has been
     //built.
     public void printArray() {
-    	int size = array.size();
+    	int size = entireArray.size();
     	
     	for (int i = 1; i < size; i++) {
-    		String[] example = array.get(i);
+    		String[] example = entireArray.get(i);
         	for(int j = 0; j<example.length; j++) {
         		System.out.print(example[j] + " ");
         	}
         	System.out.println();
     	}
     	
+    }
+    
+    public void findMatch() {
+    	int size = entireArray.size();
+    	for(int i = 0; i <size; i++) {
+    		String[] studentArray = entireArray.get(i);
+    		String id = studentArray[0];
+    		for(int j = 0; j<size; j++) {
+    			if (i == j) {
+    				continue;
+    			}
+    			if (id.equals("")) {
+    				continue;
+    			}
+    			String[] notherStudentArray = entireArray.get(j);
+    			String secondID = notherStudentArray[0];
+    			
+    			if(id.equals(secondID)) {
+    				System.out.println(studentArray[0] + " " + studentArray[1]+ " " + studentArray[2]);
+    				System.out.println(notherStudentArray[0] + " " + notherStudentArray[1]+ " " + notherStudentArray[2]);
+
+    			}
+    		}
+    	}
     }
 }

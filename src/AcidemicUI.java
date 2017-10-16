@@ -127,7 +127,7 @@ public class AcidemicUI {
 		System.out.println("Save Data\n");
 		
 		//Try Catch actual work
-		int num1 = 0, num2 = 0;
+		int currentClass = 0;
 		try {
 
 			fw = new FileWriter(fileName + ".csv");
@@ -148,14 +148,21 @@ public class AcidemicUI {
 			
 			
 			for (int i = 0; i < fileData.size(); i++) {
-				num1 =i;
+
+				if (fileData.get(i).get(0).equalsIgnoreCase("Student ID") ) {
+					currentClass = i;
+					year = fileData.get(i).get(3);
+					sem = fileData.get(i).get(2);
+					classID =fileData.get(i).get(1);
+							
+				}
 				if ( fileData.get(i).get(0).equals(studentID ) ) {
 					
 					for (int j = 5; j < fileData.get(i).size(); j++) {
-						num2 =j;
+						
 						
 						System.out.print(fileData.get(i).get(j).toString() + ", ");
-						buff.write( studentID + "," + classID + "," +sem +","+year + "," + fileData.get(i).get(j).toString() + ", ");
+						buff.write( studentID + "," + classID + "," + sem + "," + year + "," + fileData.get(currentClass).get(j) + ", " + fileData.get(i).get(j).toString() + ", ");
 						buff.newLine();
 					}
 					System.out.println("\n");
@@ -165,7 +172,8 @@ public class AcidemicUI {
 			
 			
 		} catch (Exception e) {
-			System.out.println("i: " + num1 + " j: " + num2);
+			System.out.println("This is a terrible error but something went wrong");
+			e.printStackTrace();
 		}finally {
 
 			try {

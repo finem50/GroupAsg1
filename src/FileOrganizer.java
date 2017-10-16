@@ -71,9 +71,9 @@ public class FileOrganizer {
   	  	indexLocation = fileName.indexOf(".");
   	  	year = fileName.substring(0, indexLocation);
   	  	
-  	  	classData[0] = classNumber;
-  	  	classData[1] = semester;
-  	  	classData[2] = year;
+  	  	classData[0] = "Class: " + classNumber;
+  	  	classData[1] = "Semester: " + semester;
+  	  	classData[2] = "Year: " + year;
   	  	
   	  	//This is where we had the data to Index 0.
   	  	array.add(classData);
@@ -224,9 +224,9 @@ public class FileOrganizer {
     	 
     	 array = null;
 
-		 String[] hello = new String[1];
-		 hello[0] = "";
-    	 entireArray.add(hello);
+//		 String[] hello = new String[1];
+//		 hello[0] = "";
+//    	 entireArray.add(hello);
     }
     
     
@@ -236,7 +236,11 @@ public class FileOrganizer {
     //	String[] firstIndex = exampleList.get(i);
     //	String idNumber = firstIndex[0];
     public ArrayList<String[]> getArray() {
-    	return array;
+    	return entireArray;
+    }
+    
+    public ArrayList<ArrayList<String>> getStudentArray() {
+    	return students;
     }
     
     //Unnecessary printing method for our class, but this

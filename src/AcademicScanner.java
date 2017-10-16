@@ -3,7 +3,6 @@
  *
  */
 public class AcademicScanner {
-
     public static boolean loop = true;
     private static AcidemicUI ui = new AcidemicUI();
 
@@ -14,6 +13,4 @@ public class AcademicScanner {
             ui.mainMenu();
         }
     }
-
-
 }

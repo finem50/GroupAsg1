@@ -201,15 +201,28 @@ public class AcidemicUI {
 	 *		2. If the course number is missing, it should contain data for all the courses during that semester/year.
 	 *		3. If the semester/year is missing, it should contain data for the given course across all semesters.
 	 */
-	public void studentsByGrade( String _coursenum ) {
-		
+
+	public int[] studentsByGrade( String _coursenum ) {
+		ArrayList<String[]> fileData = organizer.getArray();
+
+		int[] gradeCount = new int[fileData.size()];
+		int studentCount = 0;
+
 		try {
 			int courseNum = Integer.parseInt( _coursenum );
 			//TODO: more stuff
+
+			for(int i = 0; i < fileData.size(); i++){
+				if (_coursenum.equals(fileData.get(3))){
+					
+				}
+				gradeCount[i] = studentCount;
+			}
+
 		} catch (Exception e) {
 			System.out.println( "Couldn't understand Course Number" );
 		}
-		
+		return gradeCount;
 	}
 	
 	public void studentByGrade( String yearSem, String _coursenum ){

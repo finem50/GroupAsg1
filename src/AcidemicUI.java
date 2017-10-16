@@ -88,20 +88,29 @@ public class AcidemicUI {
 	 *  Add data (‘a’ or ‘A’):
 	 *		i. Take file name from the user (course-semester-year.csv).
 	 *		ii. Read the provided file (if it exists), extract the data and add it to the repository along with the course number, semester and year data.
+	 *		
 	 *		iii. Print the number of students whose data it just read, and how many students already existed in the repository.
 	 */
 	public void addData(String fileName) {
 		
+		
 		try {
-			organizer.readFile(fileName);
-			ArrayList data = organizer.entireArray;
+			if (fileName.contains(".csv")) {
+				organizer.readFile(fileName);
+			}
+			else{
+				organizer.readFile(fileName + ".csv");
+			}
 			
-			
-			
-			
+			if (organizer.getCounter() == -1) {
+				System.out.println("The File was empty");
+			}
+			else{
+				System.out.println( "Files have been read into the repository\nNumber of Newly Added Students: " + organizer.getCounter() + "\n\n" );
+			}
 		} catch (Exception e) {
 			
-			System.out.println("Invalid File Name ");
+			System.out.println("Invalid File Name File does not exist ");
 		}
 		
 	}
@@ -133,14 +142,12 @@ public class AcidemicUI {
 			fw = new FileWriter(fileName + ".csv");
 			buff = new BufferedWriter(fw);
 			
-			//get students arraylist
+			//get students array list
 			ArrayList<ArrayList<String>> fileData = organizer.getStudentArray();
 			year = fileData.get(0).get(3);
 			sem = fileData.get(0).get(2);
 			classID = fileData.get(0).get(1);
 			
-			ArrayList<ArrayList<String>> saveData;
-			//organizer.printStudents();
 			//check
 			if (fileData.isEmpty()) {
 				System.out.println("There is no data in students file");

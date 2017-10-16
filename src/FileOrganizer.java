@@ -48,10 +48,16 @@ public class FileOrganizer {
     ArrayList<String> studentData = new ArrayList<String>();
 
     boolean fullNameUsed = false;
+    int counter = -1;
+    
+    
 
     //Method used to read files and allocate data to an 
     //ArrayList of type String[].
     public void readFile(String file) {
+    	
+    	counter = 0;
+    	
     	fullNameUsed = false;
     	
     	array = new ArrayList<String[]>();
@@ -151,6 +157,9 @@ public class FileOrganizer {
     	        //data values, now we loop through the file gathering data
     	        //and inputting them into our array.
     	        while ((line = br.readLine()) != null) {
+    	        	
+    	        	counter++;
+    	        	
     	        	classData = new String [rowLength];
     	        	 String[] lineElements = line.split(cvsSplitBy);
     	        	 
@@ -283,5 +292,9 @@ public class FileOrganizer {
     			}
     		}
     	}
+    }
+    
+    public int getCounter(){
+    	return counter;
     }
 }

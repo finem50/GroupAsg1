@@ -66,10 +66,15 @@ public class AcidemicUI {
 				System.out.println("(optional) Enter Course Number");
 				String courseNum = scan.nextLine();
 				
-				System.out.println("(optional) Enter Yeah and semester (ie: spring-2017) ");				
+				System.out.println("(optional) Enter Year and semester (ie: spring-2017) ");
 				String yearSem = scan.nextLine();
-				
-				studentByGrade( yearSem, courseNum );
+
+				if(yearSem.isEmpty()){
+					studentsByGrade(courseNum);
+
+				} else {
+					studentByGrade(yearSem, courseNum);
+				}
 				break;
 				
 			case 'e':
@@ -80,12 +85,12 @@ public class AcidemicUI {
 		}
 		else{
 			
-			System.out.println("Please enter valid input (a, s, g, e");
+			System.out.println("Please enter valid input (a, s, g, e)");
 		}
 	}
 	
 	/**
-	 *  Add data (‘a’ or ‘A’):
+	 *  Add data (ï¿½aï¿½ or ï¿½Aï¿½):
 	 *		i. Take file name from the user (course-semester-year.csv).
 	 *		ii. Read the provided file (if it exists), extract the data and add it to the repository along with the course number, semester and year data.
 	 *		
@@ -116,11 +121,11 @@ public class AcidemicUI {
 	}
 	
 	/**
-	 * Save data for a student (‘s’ or ‘S’):
-	 *		i. Take student ID (e.g. “ashesh”). Note that the student ID may have numbers.
+	 * Save data for a student (ï¿½sï¿½ or ï¿½Sï¿½):
+	 *		i. Take student ID (e.g. ï¿½asheshï¿½). Note that the student ID may have numbers.
 	 *		ii. Take the name of the file where data must be exported/saved.
 	 *		iii. Find all data from the repository pertaining to this student, and export it in csv format with the following columns:
-	 *			1. Column headings: “Student Id”, “Course”, “Semester”, “Year”, “Assignment name”, “Points”
+	 *			1. Column headings: ï¿½Student Idï¿½, ï¿½Courseï¿½, ï¿½Semesterï¿½, ï¿½Yearï¿½, ï¿½Assignment nameï¿½, ï¿½Pointsï¿½
 	 */
 	public void saveData(String studentID, String fileName) {
 		//151vxw8
@@ -200,26 +205,39 @@ public class AcidemicUI {
 	}
 	
 	/**
-	 * Return number of students who got a specific grade in a specific course in a specific semester (‘g’ or ‘G’):
-	 *		i. Take the course number (e.g. 437). The user must have the option of skipping this input by typing “none”.
-	 *		ii. Take the semester and year from the user (e.g. “Fall and “2005”). The user must have the option of skipping this input by typing “none”.
+	 * Return number of students who got a specific grade in a specific course in a specific semester (ï¿½gï¿½ or ï¿½Gï¿½):
+	 *		i. Take the course number (e.g. 437). The user must have the option of skipping this input by typing ï¿½noneï¿½.
+	 *		ii. Take the semester and year from the user (e.g. ï¿½Fall and ï¿½2005ï¿½). The user must have the option of skipping this input by typing ï¿½noneï¿½.
 	 *		iii. If both inputs are skipped, the program should return to the menu without doing anything.
 	 *		iv. Return an array of integers. The array must be of length 
-	 *			5. The first position should store the number of A’s, the next one the number of ‘B’s and so on.
+	 *		v. The first position should store the number of Aï¿½s, the next one the number of ï¿½Bï¿½s and so on.
 	 *		
 	 *		1. If the course number and semester/year were specified, it should contain data only for that course during that semester/year.
 	 *		2. If the course number is missing, it should contain data for all the courses during that semester/year.
 	 *		3. If the semester/year is missing, it should contain data for the given course across all semesters.
 	 */
-	public void studentsByGrade( String _coursenum ) {
-		
+
+	public int[] studentsByGrade( String _coursenum ) {
+		ArrayList<String[]> fileData = organizer.getArray();
+
+		int[] gradeCount = new int[fileData.size()];
+		int studentCount = 0;
+
 		try {
 			int courseNum = Integer.parseInt( _coursenum );
 			//TODO: more stuff
+
+			for(int i = 0; i < fileData.size(); i++){
+				if (_coursenum.equals(fileData.get(3))){
+					
+				}
+				gradeCount[i] = studentCount;
+			}
+
 		} catch (Exception e) {
-			System.out.println( "Cound't understand Course Number" );
+			System.out.println( "Couldn't understand Course Number" );
 		}
-		
+		return gradeCount;
 	}
 	
 	public void studentByGrade( String yearSem, String _coursenum ){
@@ -227,12 +245,12 @@ public class AcidemicUI {
 			int courseNum = Integer.parseInt( _coursenum );
 			//TODO: more stuff
 		} catch (Exception e) {
-			System.out.println( "Cound't understand Course Number" );
+			System.out.println( "Couldn't understand Course Number" );
 		}
 	}
 	
 	/**
-	 * Exit the program (‘e’ or ‘E’).
+	 * Exit the program (ï¿½eï¿½ or ï¿½Eï¿½).
 	 */
 	public void exitProgram() {
 		

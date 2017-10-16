@@ -3,17 +3,14 @@
  *
  */
 public class AcademicScanner {
+    public static boolean loop = true;
+    private static AcidemicUI ui = new AcidemicUI();
 
-	public static boolean loop = true;
-	private static AcidemicUI ui = new AcidemicUI();
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
 
-		while(loop) {
-			ui.mainMenu();
-		}
-	}
-	
-
+        while(loop) {
+            ui.mainMenu();
+        }
+    }
 }

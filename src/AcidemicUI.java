@@ -66,10 +66,15 @@ public class AcidemicUI {
 				System.out.println("(optional) Enter Course Number");
 				String courseNum = scan.nextLine();
 				
-				System.out.println("(optional) Enter Yeah and semester (ie: spring-2017) ");				
+				System.out.println("(optional) Enter Year and semester (ie: spring-2017) ");
 				String yearSem = scan.nextLine();
-				
-				studentByGrade( yearSem, courseNum );
+
+				if(yearSem.isEmpty()){
+					studentsByGrade(courseNum);
+
+				} else {
+					studentByGrade(yearSem, courseNum);
+				}
 				break;
 				
 			case 'e':
@@ -80,7 +85,7 @@ public class AcidemicUI {
 		}
 		else{
 			
-			System.out.println("Please enter valid input (a, s, g, e");
+			System.out.println("Please enter valid input (a, s, g, e)");
 		}
 	}
 	

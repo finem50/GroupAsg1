@@ -128,6 +128,8 @@ public class FileOrganizer {
     	        }
     	        
     	        students.add(studentData);
+    	        studentData = null;
+    	        studentData = new ArrayList<String>();
     	        
     	        int startingIndex = 4;
     	        
@@ -152,9 +154,13 @@ public class FileOrganizer {
     	        	classData = new String [rowLength];
     	        	 String[] lineElements = line.split(cvsSplitBy);
     	        	 
-    	        	 studentData.add(1,classNumber);
-    	        	 studentData.add(2,semester);
-    	        	 studentData.add(3, year);
+//    	        	 studentData.add(1,classNumber);
+//    	        	 studentData.add(2,semester);
+//    	        	 studentData.add(3, year);
+    	        	 
+    	        	 studentData.add(classNumber);
+    	        	 studentData.add(semester);
+    	        	 studentData.add(year);
     	        	 
     	        	 for(int i=0; i<lineElements.length; i++) {
     	        		 if (i == idLoc) {
@@ -180,10 +186,14 @@ public class FileOrganizer {
     	        		 else {
     	        			 classData[startingIndex] = lineElements[i];
     	        			 startingIndex++;
+    	        			 studentData.add(lineElements[i]);
     	        		 }
     	        	 }
     	        	 
     	        	 array.add(classData);
+    	        	 students.add(studentData);
+    	        	 studentData = null;
+    	    	        studentData = new ArrayList<String>();
     	        	 
     	        	 //Necessary deletion of classData.
     	        	 classData = null;
@@ -239,6 +249,19 @@ public class FileOrganizer {
     		String[] example = entireArray.get(i);
         	for(int j = 0; j<example.length; j++) {
         		System.out.print(example[j] + " ");
+        	}
+        	System.out.println();
+    	}
+    	
+    }
+    public void printStudents() {
+    	int size = students.size();
+    	
+    	for (int i = 0; i < size; i++) {
+    		ArrayList<String> newExample = students.get(i);
+        	for(int j = 0; j<newExample.size(); j++) {
+        		System.out.print(newExample.get(j) + " ");
+//        		System.out.print(example[j] + " ");
         	}
         	System.out.println();
     	}

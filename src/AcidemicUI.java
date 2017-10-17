@@ -210,33 +210,66 @@ public class AcidemicUI {
 		String sC = "C";
 		String sD = "D";
 		String sF = "F";
-		String course226 = "226";
-		String course326 = "326";
-		int size = organizer.getArray().get(0)[0].length();
 		ArrayList<String[]> fileData = organizer.getArray();
 
 		int[] gradeCount = new int[5];
 
-
 		try {
 			int courseNum = Integer.parseInt( _coursenum );
-			//TODO: more stuff
-			//Starting at 1, index 0 contains class number, year, and semester
-			for(int i = 1; i <= size; i++) {
-				if (course226 == _coursenum) {
 
-					if (fileData.get(i)[3].equals(sA))
-						iA++;
-					else if (fileData.get(i)[3].equals(sB))
-						iB++;
-					else if (fileData.get(i)[3].equals(sC))
-						iC++;
-					else if (fileData.get(i)[3].equals(sD))
-						iD++;
-					else if (fileData.get(i)[3].equals(sF))
-						iF++;
+			//Starting index is 1, because index 0 contains class number, year, and semester
+			for(int i = 0; i <= fileData.size(); i++){
+
+				boolean correctClass = false;
+
+				if((fileData.get(i)[0].equals("Class: "+ courseNum))){
+
+					correctClass = true;
+					continue;
 				}
+				if(fileData.get(i)[3] == null) {
+
+					if ((fileData.get(i)[0].equals("Class: " + courseNum))) {
+
+						correctClass = true;
+						continue;
+
+					} else
+						correctClass = false;
+
+				} else
+					continue;
+
+				if (fileData.get(i)[3].equals(sA))
+					iA++;
+				else if (fileData.get(i)[3].equals(sB))
+					iB++;
+				else if (fileData.get(i)[3].equals(sC))
+					iC++;
+				else if (fileData.get(i)[3].equals(sD))
+					iD++;
+				else if (fileData.get(i)[3].equals(sF))
+					iF++;
+
+				fileData = null;
 			}
+
+
+/*				if (Integer.parseInt(_coursenum) == courseNum) {
+					for (int i = 1; i <= fileData.size(); i++) {
+
+						if (fileData.get(i)[3].equals(sA))
+							iA++;
+						else if (fileData.get(i)[3].equals(sB))
+							iB++;
+						else if (fileData.get(i)[3].equals(sC))
+							iC++;
+						else if (fileData.get(i)[3].equals(sD))
+							iD++;
+						else if (fileData.get(i)[3].equals(sF))
+							iF++;
+					}
+				}*/
 
 			gradeCount[0] = iA;
 			gradeCount[1] = iB;
@@ -247,9 +280,12 @@ public class AcidemicUI {
 		} catch (Exception e) {
 			System.out.println( "Couldn't understand Course Number" );
 		}
+		for(int i = 0; i < gradeCount.length; i++){
+			System.out.println(gradeCount[i]);
+		}
 		return gradeCount;
 	}
-	
+
 	public void studentByGrade( String yearSem, String _coursenum ){
 		try {
 			int courseNum = Integer.parseInt( _coursenum );

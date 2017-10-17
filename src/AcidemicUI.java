@@ -22,6 +22,7 @@ public class AcidemicUI {
 		organizer.readFile("326-fall-1996.csv");
 		organizer.readFile("326-fall-1997.csv");
 		
+		
 //		organizer.printArray();
 		
 	}
@@ -61,19 +62,35 @@ public class AcidemicUI {
 				saveData( id, file );
 				break;
 				
-			case 'g':
+			case 'g': //case G is for the number of students with a certain grade. 
 				
 				System.out.println("(optional) Enter Course Number");
 				String courseNum = scan.nextLine();
 				
-				System.out.println("(optional) Enter Year and semester (ie: spring-2017) ");
-				String yearSem = scan.nextLine();
-
-				if(yearSem.isEmpty()){
+				System.out.println("(optional) Enter Year: ");
+				String year = scan.nextLine();
+				String semester = "";
+				if (year != "none") {
+					System.out.println("Enter Semester (ie: Spring): ");
+					semester = scan.nextLine();
+				}
+				
+				year = year.toLowerCase();
+				semester = semester.toLowerCase(); 
+				courseNum = courseNum.toLowerCase();
+				
+				//if else to determine which stuentByGrade to use. 
+				if (year.isEmpty() && courseNum.isEmpty() || year.contains("none") && courseNum.contains("none") ) {
+					System.out.println("Please enter either year and semester or course");
+					
+				}else if(year.isEmpty() || year.contains("none") ){
 					studentsByGrade(courseNum);
 
-				} else {
-					studentByGrade(yearSem, courseNum);
+				}else if (courseNum.isEmpty() || courseNum.contains("none")) {
+					studentByGrade(year, semester);
+					
+				}else {
+					studentByGrade(year, semester, courseNum);
 				}
 				break;
 				
@@ -239,16 +256,91 @@ public class AcidemicUI {
 		}
 		return gradeCount;
 	}
-	
-	public void studentByGrade( String yearSem, String _coursenum ){
+	public int[] studentByGrade(String _year, String _semester){
+		
+		int[] gradeCounter = new int[5];
+		
 		try {
-			int courseNum = Integer.parseInt( _coursenum );
-			//TODO: more stuff
+			
+			ArrayList<ArrayList<String>> fileData = organizer.getStudentArray();
+
+			for (int i = 0; i < fileData.size(); i++) {
+				if (fileData.get(i).get(2).equals(_semester) && fileData.get(i).get(3).equals(_year)) {					
+					
+					if (!fileData.get(i).get( fileData.get(i).size() - 1 ).equals( "Total" ) ) {
+					
+						if ( Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 60 ) {
+							gradeCounter[4]++;
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 60 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 70) {
+							gradeCounter[3]++;
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 70 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 80) {
+							gradeCounter[2]++;
+						}
+						else if ( Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 80 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 90) {
+							gradeCounter[1]++;
+							
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 90) {
+							gradeCounter[0]++;
+						}
+					}
+					
+				}
+			}
+			
+			System.out.println("Students with an A: " + gradeCounter[0] +"\nStudents with a B: " + gradeCounter[1] + "\nStudents with a C: " + gradeCounter[2] + "\nStudens with a D: " + gradeCounter[3] + "\nStudnets with an F: " + gradeCounter[4]);
+			return gradeCounter;
+			
 		} catch (Exception e) {
-			System.out.println( "Couldn't understand Course Number" );
+			return null;
+		}
+		
+	}
+	public int[] studentByGrade( String _year, String _semester, String _courseNum ){
+		try {
+			
+			int[] gradeCounter = new int[5];
+			
+			ArrayList<ArrayList<String>> fileData = organizer.getStudentArray();
+
+			for (int i = 0; i < fileData.size(); i++) {
+				if (fileData.get(i).get(1).equals(_courseNum) && fileData.get(i).get(2).equals(_semester) && fileData.get(i).get(3).equals(_year)) {					
+					
+					if (!fileData.get(i).get( fileData.get(i).size() - 1 ).equals( "Total" ) ) {
+					
+						if ( Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 60 ) {
+							gradeCounter[4]++;
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 60 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 70) {
+							gradeCounter[3]++;
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 70 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 80) {
+							gradeCounter[2]++;
+						}
+						else if ( Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 80 && Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) < 90) {
+							gradeCounter[1]++;
+							
+						}
+						else if (Double.parseDouble( fileData.get(i).get(fileData.get(i).size() - 1 ) ) >= 90) {
+							gradeCounter[0]++;
+						}
+					}
+					
+				}
+			}
+			
+			System.out.println("Students with an A: " + gradeCounter[0] +"\nStudents with a B: " + gradeCounter[1] + "\nStudents with a C: " + gradeCounter[2] + "\nStudens with a D: " + gradeCounter[3] + "\nStudnets with an F: " + gradeCounter[4]);
+			return gradeCounter;
+			
+		} catch (NumberFormatException e) {
+			System.out.println( "Couldn't understand grade" );
+			return null;
 		}
 	}
 	
+
 	/**
 	 * Exit the program (�e� or �E�).
 	 */
@@ -256,6 +348,7 @@ public class AcidemicUI {
 		
 		System.out.println( "Exiting Program" );
 		AcademicScanner.loop = false;
+		scan.close();
 	}
 
 

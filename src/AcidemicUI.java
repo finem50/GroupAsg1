@@ -215,21 +215,22 @@ public class AcidemicUI {
 		int[] gradeCount = new int[5];
 
 		try {
-			int courseNum = Integer.parseInt( _coursenum );
+
+			String number = "Class: " + _coursenum;
 
 			//Starting index is 1, because index 0 contains class number, year, and semester
-			for(int i = 0; i <= fileData.size(); i++){
+			for (int i = 0; i <= fileData.size(); i++) {
 
 				boolean correctClass = false;
 
-				if((fileData.get(i)[0].equals("Class: "+ courseNum))){
+				if ((fileData.get(i)[0].equals(number))) {
 
 					correctClass = true;
 					continue;
 				}
-				if(fileData.get(i)[3] == null) {
+				if (fileData.get(i)[3] == null) {
 
-					if ((fileData.get(i)[0].equals("Class: " + courseNum))) {
+					if ((fileData.get(i)[0].equals(number))) {
 
 						correctClass = true;
 						continue;
@@ -238,7 +239,7 @@ public class AcidemicUI {
 						correctClass = false;
 
 				} else
-					continue;
+					/*continue;*/
 
 				if (fileData.get(i)[3].equals(sA))
 					iA++;
@@ -252,37 +253,22 @@ public class AcidemicUI {
 					iF++;
 
 				fileData = null;
+				fileData = organizer.getArray();
 			}
 
 
-/*				if (Integer.parseInt(_coursenum) == courseNum) {
-					for (int i = 1; i <= fileData.size(); i++) {
-
-						if (fileData.get(i)[3].equals(sA))
-							iA++;
-						else if (fileData.get(i)[3].equals(sB))
-							iB++;
-						else if (fileData.get(i)[3].equals(sC))
-							iC++;
-						else if (fileData.get(i)[3].equals(sD))
-							iD++;
-						else if (fileData.get(i)[3].equals(sF))
-							iF++;
-					}
-				}*/
-
-			gradeCount[0] = iA;
-			gradeCount[1] = iB;
-			gradeCount[2] = iC;
-			gradeCount[3] = iD;
-			gradeCount[4] = iF;
-
 		} catch (Exception e) {
-			System.out.println( "Couldn't understand Course Number" );
+			System.out.println("Couldn't understand Course Number");
 		}
-		for(int i = 0; i < gradeCount.length; i++){
-			System.out.println(gradeCount[i]);
-		}
+		gradeCount[0] = iA;
+		gradeCount[1] = iB;
+		gradeCount[2] = iC;
+		gradeCount[3] = iD;
+		gradeCount[4] = iF;
+
+		System.out.println("Studeents with A: " + iA + "\n" + "Studeents with B: " + iB + "\n" +
+				"Studeents with C: " + iC + "\n" + "Studeents with D: " + iD + "\n"
+					+ "Studeents with F: " + iF);
 		return gradeCount;
 	}
 

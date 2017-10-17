@@ -210,7 +210,9 @@ public class AcidemicUI {
 		String sC = "C";
 		String sD = "D";
 		String sF = "F";
-
+		String course226 = "226";
+		String course326 = "326";
+		int size = organizer.getArray().get(0)[0].length();
 		ArrayList<String[]> fileData = organizer.getArray();
 
 		int[] gradeCount = new int[5];
@@ -219,20 +221,21 @@ public class AcidemicUI {
 		try {
 			int courseNum = Integer.parseInt( _coursenum );
 			//TODO: more stuff
+			//Starting at 1, index 0 contains class number, year, and semester
+			for(int i = 1; i <= size; i++) {
+				if (course226 == _coursenum) {
 
-			for(int i = 0; i < fileData.size(); i++){
-				
-
-				if(fileData.get(i + 1)[3].equals(sA))
-					iA++;
-					else if(fileData.get(i + 1)[3].equals(sB))
+					if (fileData.get(i)[3].equals(sA))
+						iA++;
+					else if (fileData.get(i)[3].equals(sB))
 						iB++;
-						else if(fileData.get(i + 1)[3].equals(sC))
-							iC++;
-							else if(fileData.get(i + 1)[3].equals(sD))
-								iD++;
-									else if(fileData.get(i + 1)[3].equals(sF))
-										iF++;
+					else if (fileData.get(i)[3].equals(sC))
+						iC++;
+					else if (fileData.get(i)[3].equals(sD))
+						iD++;
+					else if (fileData.get(i)[3].equals(sF))
+						iF++;
+				}
 			}
 
 			gradeCount[0] = iA;
